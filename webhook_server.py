@@ -136,8 +136,11 @@ async def process_message(message: dict):
     except Exception as e:
         logger.error(f"Error processing message: {e}")
 
+# Create app instance for gunicorn
+app = app
+
 if __name__ == "__main__":
     import uvicorn
     port = int(os.getenv('PORT', '10000'))
-    host = os.getenv('WHATSAPP_WEBHOOK_HOST', '0.0.0.0')
+    host = '0.0.0.0'
     uvicorn.run(app, host=host, port=port)
