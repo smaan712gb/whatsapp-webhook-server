@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: ibkr-whatsapp-webhook
+    runtime: python
+    region: ohio
+    plan: free
+    buildCommand: pip install --no-cache-dir -r requirements.txt
+    startCommand: gunicorn -w 4 -k uvicorn.workers.UvicornWorker webhook_server:app
+    envVars:
+      - key: WHATSAPP_APP_SECRET
+        sync: false
+      - key: WHATSAPP_ACCESS_TOKEN
+        sync: false
+      - key: WHATSAPP_PHONE_NUMBER_ID
+        sync: false
+      - key: WHATSAPP_VERIFY_TOKEN
+        sync: false
+    healthCheckPath: /webhook
+    autoDeploy: true
